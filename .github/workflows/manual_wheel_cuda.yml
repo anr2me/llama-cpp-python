@@ -111,8 +111,9 @@ jobs:
           if ($IsLinux) {
             $env:LD_LIBRARY_PATH = $env:CONDA_PREFIX + '/lib:' + $env:LD_LIBRARY_PATH
           }
-          $env:MAX_JOBS = '4'
           $env:VERBOSE = '1'
+          $env:MAX_JOBS=4
+          $env:CMAKE_BUILD_PARALLEL_LEVEL=4
           $env:CMAKE_ARGS = '-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=all'
           $env:CMAKE_ARGS = "-DGGML_CUDA_FORCE_MMQ=ON $env:CMAKE_ARGS"
           # if ($env:AVXVER -eq 'AVX') {
