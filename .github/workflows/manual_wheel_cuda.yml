@@ -34,7 +34,7 @@ jobs:
     needs: define_matrix
     runs-on: ${{ matrix.os }}
     strategy:
-      max-parallel: 5
+      max-parallel: 13
       matrix: ${{ fromJSON(needs.define_matrix.outputs.matrix) }}
     defaults:
       run:
