@@ -24,7 +24,6 @@ jobs:
               'pyver' = @("3.9", "3.10", "3.11", "3.12")
               'cuda' = @("12.1.1", "12.2.2", "12.3.2", "12.4.1", "12.5.1", "12.6.3", "12.8.1", "12.9.2") #"12.1.1", "12.2.2", "12.3.2", "12.4.1", "12.5.1", "12.6.3", "12.8.1", 
               'releasetag' = @("basic")
-              'max-parallel' = @(4)
           }
 
           $matrixOut = ConvertTo-Json $matrix -Compress
@@ -35,6 +34,7 @@ jobs:
     needs: define_matrix
     runs-on: ${{ matrix.os }}
     strategy:
+      max-parallel: 5
       matrix: ${{ fromJSON(needs.define_matrix.outputs.matrix) }}
     defaults:
       run:
