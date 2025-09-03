@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Enable exit on error
-#set -e
+set -e
 
 # Function for logging
 log_error() {
