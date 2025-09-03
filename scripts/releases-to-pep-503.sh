@@ -12,6 +12,7 @@ log_info() {
     echo "INFO: $1"
 }
 
+log_info($1)
 # Get output directory or default to index/whl/cpu
 output_dir=${1:-"index/whl/cpu"}
 
