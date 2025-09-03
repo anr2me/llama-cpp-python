@@ -20,7 +20,7 @@ jobs:
         id: set-matrix
         run: |
           $matrix = @{
-              'os' = @('ubuntu-22.04', 'windows-2022')
+              'os' = @('windows-2022') #'ubuntu-22.04',  
               'pyver' = @("3.9", "3.10", "3.11", "3.12")
               'cuda' = @("12.1.1", "12.2.2", "12.3.2", "12.4.1", "12.5.1", "12.6.3", "12.8.1", "12.9.2")
               'releasetag' = @("basic")
@@ -48,7 +48,7 @@ jobs:
         if: runner.os == 'Windows'
         uses: microsoft/setup-msbuild@v2
         with:
-          vs-version: '[16.11,16.12)'
+          vs-version: '[16.11,16.12,17.14)'
 
       - uses: actions/checkout@v4
         with:
