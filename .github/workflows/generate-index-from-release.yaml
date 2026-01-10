@@ -49,6 +49,7 @@ jobs:
           ./scripts/releases-to-pep-503.sh index/whl/cu126 '^[v]?[0-9]+\.[0-9]+\.[0-9]+-cu126$'
           ./scripts/releases-to-pep-503.sh index/whl/cu128 '^[v]?[0-9]+\.[0-9]+\.[0-9]+-cu128$'
           ./scripts/releases-to-pep-503.sh index/whl/cu129 '^[v]?[0-9]+\.[0-9]+\.[0-9]+-cu129$'
+          ./scripts/releases-to-pep-503.sh index/whl/cu130 '^[v]?[0-9]+\.[0-9]+\.[0-9]+-cu130$'
           ./scripts/releases-to-pep-503.sh index/whl/metal '^[v]?[0-9]+\.[0-9]+\.[0-9]+-metal$'
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
