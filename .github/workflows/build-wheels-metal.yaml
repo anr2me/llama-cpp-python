@@ -19,7 +19,7 @@ jobs:
           submodules: "recursive"
 
       # Used to host cibuildwheel
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: 'pip'
@@ -32,7 +32,7 @@ jobs:
         shell: bash
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.22.0
+        uses: pypa/cibuildwheel@v3.3.1
         env:
           # disable repair
           CIBW_REPAIR_WHEEL_COMMAND: ""
