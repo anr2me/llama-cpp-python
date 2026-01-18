@@ -40,6 +40,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ./scripts/get-releases.sh
+          # Non-existing file could cause am error at the script
           #./scripts/releases-to-pep-503.sh index/whl/cpu '^[v]?[0-9]+\.[0-9]+\.[0-9]+$'
           #./scripts/releases-to-pep-503.sh index/whl/cu121 '^[v]?[0-9]+\.[0-9]+\.[0-9]+-cu121$'
           #./scripts/releases-to-pep-503.sh index/whl/cu122 '^[v]?[0-9]+\.[0-9]+\.[0-9]+-cu122$'
@@ -48,7 +49,7 @@ jobs:
           ./scripts/releases-to-pep-503.sh index/whl/cu125 '^[v]?[0-9]+\.[0-9]+\.[0-9]+-cu125$'
           ./scripts/releases-to-pep-503.sh index/whl/cu126 '^[v]?[0-9]+\.[0-9]+\.[0-9]+-cu126$'
           ./scripts/releases-to-pep-503.sh index/whl/cu128 '^[v]?[0-9]+\.[0-9]+\.[0-9]+-cu128$'
-          ./scripts/releases-to-pep-503.sh index/whl/cu129 '^[v]?[0-9]+\.[0-9]+\.[0-9]+-cu129$'
+          #./scripts/releases-to-pep-503.sh index/whl/cu129 '^[v]?[0-9]+\.[0-9]+\.[0-9]+-cu129$'
           ./scripts/releases-to-pep-503.sh index/whl/cu130 '^[v]?[0-9]+\.[0-9]+\.[0-9]+-cu130$'
           ./scripts/releases-to-pep-503.sh index/whl/cu131 '^[v]?[0-9]+\.[0-9]+\.[0-9]+-cu131$'
           ./scripts/releases-to-pep-503.sh index/whl/metal '^[v]?[0-9]+\.[0-9]+\.[0-9]+-metal$'
