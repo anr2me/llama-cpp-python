@@ -16,13 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.9"
       - name: Install huggingface-hub
         run: pip install huggingface-hub
       - name: Download model
-        run: huggingface-cli download ${{ env.REPO_ID }} ${{ env.MODEL_FILE }}
+        run: hf download ${{ env.REPO_ID }} ${{ env.MODEL_FILE }}
       - name: Cache model
         uses: actions/cache@v4
         with:
@@ -41,7 +41,7 @@ jobs:
           submodules: "recursive"
           
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
@@ -72,7 +72,7 @@ jobs:
           submodules: "recursive"
           
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
@@ -96,7 +96,7 @@ jobs:
 
   build-macos:
     needs: download-model
-    runs-on: macos-13
+    runs-on: macos-14
     strategy:
       matrix:
         python-version: ["3.9", "3.10", "3.11", "3.12"]
@@ -106,7 +106,7 @@ jobs:
           submodules: "recursive"
           
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
@@ -137,14 +137,14 @@ jobs:
 
   build-macos-metal:
     needs: download-model
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: "recursive"
           
       - name: Set up Python 3.9
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.9"
 
