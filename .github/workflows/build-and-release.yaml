@@ -19,7 +19,7 @@ jobs:
           submodules: "recursive"
 
       # Used to host cibuildwheel
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.9"
 
@@ -42,7 +42,7 @@ jobs:
         shell: cmd
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.22.0
+        uses: pypa/cibuildwheel@v3.3.1
         env:
           # disable repair
           CIBW_REPAIR_WHEEL_COMMAND: ""
@@ -69,7 +69,7 @@ jobs:
           platforms: linux/arm64
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.22.0
+        uses: pypa/cibuildwheel@v3.3.1
         env:
           CIBW_SKIP: "*musllinux* pp*"
           CIBW_REPAIR_WHEEL_COMMAND: ""
@@ -94,7 +94,7 @@ jobs:
         with:
           submodules: "recursive"
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.9"
 
