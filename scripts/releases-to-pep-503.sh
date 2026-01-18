@@ -57,6 +57,11 @@ EOF
 
 # Filter releases by pattern
 releases=$(grep -E "$pattern" "$current_dir/all_releases.txt")
+log_info "Test1"
+cat "$current_dir/all_releases.txt"
+log_info "Test2"
+echo "$releases"
+log_info "Test3"
 
 # Prepare curl headers
 headers=('--header' 'Accept: application/vnd.github.v3+json')
