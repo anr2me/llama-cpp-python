@@ -62,6 +62,8 @@ cat "$current_dir/all_releases.txt"
 log_info "Test2"
 echo "$releases"
 log_info "Test3"
+echo "$pattern"
+log_info "Test4"
 
 # Prepare curl headers
 headers=('--header' 'Accept: application/vnd.github.v3+json')
@@ -102,6 +104,7 @@ for release in $releases; do
         echo "    <br>" >> "$output_dir/llama-cpp-python/index.html"
     done
 done
+log_info "Test5"
 
 echo "  </body>" >> "$output_dir/llama-cpp-python/index.html"
 echo "</html>" >> "$output_dir/llama-cpp-python/index.html"
