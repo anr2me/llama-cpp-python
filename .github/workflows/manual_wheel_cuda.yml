@@ -128,7 +128,7 @@ jobs:
             #$env:PATH = $env:CONDA_PREFIX + '\bin;' + $env:CONDA_PREFIX + '\Library\bin;' + $env:PATH
             echo "$env:CONDA_PREFIX\\Library\\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
             Get-ChildItem -Path ~ -Filter "nvcc.exe" -Recurse -ErrorAction SilentlyContinue
-            & "C:\Users\runneradmin\miniconda3\envs\llamacpp\bin\nvcc.exe" --version
+            nvcc.exe --version
             Get-ChildItem -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp" -Recurse -ErrorAction SilentlyContinue
           }
           Get-ChildItem -Path ~ -Filter "cuda_runtime.h" -Recurse -ErrorAction SilentlyContinue
