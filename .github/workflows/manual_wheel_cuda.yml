@@ -60,7 +60,7 @@ jobs:
           cache: 'pip'
 
       - name: Setup Mamba
-        uses: conda-incubator/setup-miniconda@v3.1.0
+        uses: conda-incubator/setup-miniconda@v3.3.0
         with:
           activate-environment: "llamacpp"
           python-version: ${{ matrix.pyver }}
@@ -101,7 +101,7 @@ jobs:
           MAMBA_NO_LOW_SPEED_LIMIT: "1"
         run: |
           $cudaVersion = $env:CUDAVER
-          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda-toolkit==$cudaVersion" I "nvidia::cuda-nvcc==$cudaVersion" 
+          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda-toolkit==$cudaVersion" I "nvidia::cuda-nvcc==${ split($cudaVersion, '.')[0] }.*" 
           python -m pip install build wheel
 
       - name: Build Wheel
