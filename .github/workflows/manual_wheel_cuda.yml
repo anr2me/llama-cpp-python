@@ -125,7 +125,7 @@ jobs:
           #$env:MAX_JOBS=4
           #$env:CMAKE_BUILD_PARALLEL_LEVEL=4
           $env:CMAKE_ARGS = '-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=all'
-          $env:CMAKE_ARGS = "-DGGML_CUDA_FORCE_MMQ=ON $env:CMAKE_ARGS" # -DCMAKE_CUDA_FLAGS='-allow-unsupported-compiler'
+          $env:CMAKE_ARGS = "-DGGML_CUDA_FORCE_MMQ=ON -DCMAKE_CUDA_FLAGS='-allow-unsupported-compiler' $env:CMAKE_ARGS"
           # if ($env:AVXVER -eq 'AVX') {
           $env:CMAKE_ARGS = $env:CMAKE_ARGS + ' -DGGML_AVX2=off -DGGML_FMA=off -DGGML_F16C=off'
           # }
