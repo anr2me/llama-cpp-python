@@ -101,7 +101,8 @@ jobs:
           MAMBA_NO_LOW_SPEED_LIMIT: "1"
         run: |
           $cudaVersion = $env:CUDAVER
-          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda-toolkit==$cudaVersion" I "nvidia::cuda-nvcc==${ split($cudaVersion, '.')[0] }.*" 
+          $cudaMajor = $cudaVersion.Split('.')[0]
+          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-nvcc==$cudaMajor.*" 
           python -m pip install build wheel
 
       - name: Build Wheel
