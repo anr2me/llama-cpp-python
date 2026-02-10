@@ -117,6 +117,10 @@ jobs:
           if ($IsLinux) {
             $env:LD_LIBRARY_PATH = $env:CONDA_PREFIX + '/lib:' + $env:CONDA_PREFIX + '/targets/x86_64-linux/lib:' + $env:LD_LIBRARY_PATH
             $env:CPATH = $env:CONDA_PREFIX + '/include:' + $env:CONDA_PREFIX + '/targets/x86_64-linux/include:' + $env:CPATH
+          } 
+          else {
+            $env:IncludePath = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:IncludePath
+            $env:CL='/I\' + $env:CONDA_PREFIX + '\Library\include'
           }
           Get-ChildItem -Path ~ -Filter "cuda_runtime.h" -Recurse -ErrorAction SilentlyContinue
           $env:VERBOSE = '1'
