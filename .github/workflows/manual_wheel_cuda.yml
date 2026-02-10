@@ -127,6 +127,7 @@ jobs:
             $env:CL='/I\' + $env:CONDA_PREFIX + '\Library\include'
             $env:PATH = $env:CONDA_PREFIX + '\bin;' + $env:CONDA_PREFIX + '\Library\bin;' + $env:PATH
             Get-ChildItem -Path ~ -Filter "nvcc.exe" -Recurse -ErrorAction SilentlyContinue
+            & "C:\Users\runneradmin\miniconda3\envs\llamacpp\bin\nvcc.exe" --version
           }
           Get-ChildItem -Path ~ -Filter "cuda_runtime.h" -Recurse -ErrorAction SilentlyContinue
           $env:VERBOSE = '1'
