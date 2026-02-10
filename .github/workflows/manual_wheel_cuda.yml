@@ -102,7 +102,7 @@ jobs:
         run: |
           $cudaVersion = $env:CUDAVER
           $cudaMajor = $cudaVersion.Split('.')[0]
-          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-nvcc==$cudaMajor.*" 
+          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-nvcc==$cudaMajor.*" "nvidia::cuda-version==$cudaVersion" 
           python -m pip install build wheel
 
       - name: Build Wheel
