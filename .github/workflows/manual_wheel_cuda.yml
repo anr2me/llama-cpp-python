@@ -104,7 +104,7 @@ jobs:
           $cudaMajor = $cudaVersion.Split('.')[0]
           $cudaParts = $cudaVersion -split '\.'
           $cudaMajorMinor = "$($cudaParts[0]).$($cudaParts[1])"
-          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-nvcc==$cudaMajorMinor.*" "conda-forge::cuda-version==$cudaMajorMinor.*"
+          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda-toolkit==$cudaVersion" "conda-forge::cuda-version==$cudaMajorMinor.*"
           python -m pip install build wheel
 
       - name: Build Wheel
@@ -120,7 +120,7 @@ jobs:
           $env:VERBOSE = '1'
           #$env:MAX_JOBS=4
           #$env:CMAKE_BUILD_PARALLEL_LEVEL=4
-          $env:CMAKE_ARGS = '-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=all'
+          $env:CMAKE_ARGS = '-DGGML_CUDA=on -DLLAMA_CUBLAS=on -DCMAKE_CUDA_ARCHITECTURES=all'
           $env:CMAKE_ARGS = "-DGGML_CUDA_FORCE_MMQ=ON $env:CMAKE_ARGS"
           # if ($env:AVXVER -eq 'AVX') {
           $env:CMAKE_ARGS = $env:CMAKE_ARGS + ' -DGGML_AVX2=off -DGGML_FMA=off -DGGML_F16C=off'
