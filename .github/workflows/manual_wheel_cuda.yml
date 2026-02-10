@@ -104,7 +104,7 @@ jobs:
           $cudaMajor = $cudaVersion.Split('.')[0]
           $cudaParts = $cudaVersion -split '\.'
           $cudaMajorMinor = "$($cudaParts[0]).$($cudaParts[1])"
-          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda" "nvidia::cuda-toolkit==$cudaVersion" "conda-forge::cuda-version==$cudaMajorMinor.*"
+          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda" "nvidia::cuda-toolkit==$cudaVersion" "conda-forge::cuda-version==$cudaMajorMinor.*" "conda-forge::gcc==13.*"
           python -m pip install build wheel
 
       - name: Build Wheel
