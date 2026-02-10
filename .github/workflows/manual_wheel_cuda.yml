@@ -124,6 +124,7 @@ jobs:
             $env:CPLUS_INCLUDE_PATH = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:CPLUS_INCLUDE_PATH
             $env:INCLUDE = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:INCLUDE
             $env:CL='/I\' + $env:CONDA_PREFIX + '\Library\include'
+            Get-ChildItem -Path ~ -Filter "nvcc.exe" -Recurse -ErrorAction SilentlyContinue
           }
           Get-ChildItem -Path ~ -Filter "cuda_runtime.h" -Recurse -ErrorAction SilentlyContinue
           $env:VERBOSE = '1'
