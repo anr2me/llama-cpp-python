@@ -133,7 +133,7 @@ jobs:
             echo "$env:CONDA_PREFIX\\Library\\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
             Get-ChildItem -Path ~ -Filter "nvcc.exe" -Recurse -ErrorAction SilentlyContinue
             nvcc.exe --version
-            New-Item -ItemType SymbolicLink -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp\bin\nvcc.exe" -Target "$env:CONDA_PREFIX\\bin\\nvcc.exe" # -Force
+            New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\bin\\nvcc.exe" -Target "C:\Users\runneradmin\miniconda3\envs\llamacpp\bin\nvcc.exe" # -Force
             #Get-ChildItem -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp" -Directory -Recurse -ErrorAction SilentlyContinue
           }
           Get-ChildItem -Path ~ -Filter "cuda_runtime.h" -Recurse -ErrorAction SilentlyContinue
