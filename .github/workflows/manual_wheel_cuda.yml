@@ -101,8 +101,10 @@ jobs:
           MAMBA_NO_LOW_SPEED_LIMIT: "1"
         run: |
           $cudaVersion = $env:CUDAVER
-          $cudaMajor = $cudaVersion.Split('.')[0]
+          #$cudaMajor = $cudaVersion.Split('.')[0]
           $cudaParts = $cudaVersion -split '\.'
+          if ("$cudaParts[0].$cudaParts[1]" -eq "12.4") {$cudaParts[1] = '5'}
+          $cudaMajor = $cudaParts[0]
           $cudaMajorMinor = "$($cudaParts[0]).$($cudaParts[1])"
           mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-libraries-dev" "nvidia::cuda-cudart-dev" "nvidia::cuda-nvcc" "nvidia::cuda-version==$cudaMajorMinor.*" "conda-forge::gcc==13.*"
           python -m pip install build wheel
