@@ -104,7 +104,7 @@ jobs:
           $cudaMajor = $cudaVersion.Split('.')[0]
           $cudaParts = $cudaVersion -split '\.'
           $cudaMajorMinor = "$($cudaParts[0]).$($cudaParts[1])"
-          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda" "nvidia::cuda-toolkit==$cudaVersion" "conda-forge::cuda-version==$cudaMajorMinor.*" "conda-forge::gcc==13.*"
+          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-nvcc" "conda-forge::cuda-version==$cudaMajorMinor.*" "conda-forge::gcc==13.*"
           python -m pip install build wheel
 
       - name: Build Wheel
@@ -133,6 +133,8 @@ jobs:
             echo "$env:CONDA_PREFIX\\Library\\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
             Get-ChildItem -Path ~ -Filter "nvcc.exe" -Recurse -ErrorAction SilentlyContinue
             nvcc.exe --version
+            Get-ChildItem -Path ~ -Filter "cicc.exe" -Recurse -ErrorAction SilentlyContinue
+            cicc.exe --version
             New-Item -ItemType Directory -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp\bin" -Force
             New-Item -ItemType SymbolicLink -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp\bin\nvcc.exe" -Target "$env:CONDA_PREFIX\\bin\\nvcc.exe" # -Force
             #Get-ChildItem -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp" -Directory -Recurse -ErrorAction SilentlyContinue
