@@ -123,21 +123,22 @@ jobs:
             $env:CPATH = $env:CONDA_PREFIX + '/include:' + $env:CONDA_PREFIX + '/targets/x86_64-linux/include:' + $env:CPATH
           } 
           elseif ($env:RUNNER_OS -eq 'Windows') {
-            #$env:CUDA_PATH = $env:CONDA_PREFIX + '\\Library\\bin'
-            $env:IncludePath = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:IncludePath
-            $env:C_INCLUDE_PATH = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:C_INCLUDE_PATH
-            $env:CPLUS_INCLUDE_PATH = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:CPLUS_INCLUDE_PATH
-            $env:INCLUDE = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:INCLUDE
-            $env:CL='/I\' + $env:CONDA_PREFIX + '\Library\include'
-            $env:Path = "$env:CONDA_PREFIX\\bin; $env:CONDA_PREFIX\\Library\\bin; $env:CONDA_PREFIX\\nvvm\\bin;" + $env:Path
-            echo "$env:CONDA_PREFIX\\Library\\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-            echo "$env:CONDA_PREFIX\\nvvm\\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+            ##$env:CUDA_PATH = $env:CONDA_PREFIX + '\\Library\\bin'
+            #$env:IncludePath = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:IncludePath
+            #$env:C_INCLUDE_PATH = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:C_INCLUDE_PATH
+            #$env:CPLUS_INCLUDE_PATH = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:CPLUS_INCLUDE_PATH
+            #$env:INCLUDE = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:INCLUDE
+            #$env:CL='/I\' + $env:CONDA_PREFIX + '\Library\include'
+            #$env:Path = "$env:CONDA_PREFIX\\bin; $env:CONDA_PREFIX\\Library\\bin; $env:CONDA_PREFIX\\nvvm\\bin;" + $env:Path
+            #echo "$env:CONDA_PREFIX\\Library\\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+            #echo "$env:CONDA_PREFIX\\nvvm\\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
             Get-ChildItem -Path ~ -Filter "nvcc.exe" -Recurse -ErrorAction SilentlyContinue
             nvcc.exe --version
             Get-ChildItem -Path ~ -Filter "cicc.exe" -Recurse -ErrorAction SilentlyContinue
-            cicc.exe --version
-            New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\bin" -Force
-            New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\bin\\nvcc.exe" -Target "$env:CONDA_PREFIX\\Library\\bin\\nvcc.exe" # -Force
+            if (-not (Test-Path -Path "$env:CONDA_PREFIX\\bin\\nvcc.exe")) {
+              #New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\bin" -Force
+              #New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\bin\\nvcc.exe" -Target "$env:CONDA_PREFIX\\Library\\bin\\nvcc.exe" # -Force
+            }
             #Get-ChildItem -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp" -Directory -Recurse -ErrorAction SilentlyContinue
           }
           Get-ChildItem -Path ~ -Filter "cuda_runtime.h" -Recurse -ErrorAction SilentlyContinue
