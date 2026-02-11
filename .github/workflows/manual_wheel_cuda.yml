@@ -109,7 +109,7 @@ jobs:
           mamba config --add channels nvidia
           mamba config --add channels conda-forge
           mamba config --set channel_priority strict
-          mamba install -y 'cuda' -c nvidia/label/cuda-$cudaVersion
+          mamba install -y -c nvidia/label/cuda-$cudaVersion "nvidia::cuda-version==$cudaMajorMinor.*" "conda-forge::gcc==13.*"
           #mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-libraries-dev" "nvidia::cuda-cudart-dev" "nvidia::cuda-nvcc" "nvidia::cuda-version==$cudaMajorMinor.*" "conda-forge::gcc==13.*"
           python -m pip install build wheel
 
