@@ -110,6 +110,9 @@ jobs:
       - name: Build Wheel
         run: |
           $cudaVersion = $env:CUDAVER.Remove($env:CUDAVER.LastIndexOf('.')).Replace('.','')
+          if ($env:RUNNER_OS -eq 'Windows') {
+            $env:CONDA_PREFIX = $env:CONDA_PREFIX + '\\Library'
+          }
           $env:CUDA_PATH = $env:CONDA_PREFIX
           $env:CUDA_HOME = $env:CONDA_PREFIX
           $env:CUDA_TOOLKIT_ROOT_DIR = $env:CONDA_PREFIX
@@ -119,7 +122,7 @@ jobs:
             $env:LD_LIBRARY_PATH = $env:CONDA_PREFIX + '/lib:' + $env:CONDA_PREFIX + '/targets/x86_64-linux/lib:' + $env:LD_LIBRARY_PATH
             $env:CPATH = $env:CONDA_PREFIX + '/include:' + $env:CONDA_PREFIX + '/targets/x86_64-linux/include:' + $env:CPATH
           } 
-          else {
+          elseif ($env:RUNNER_OS -eq 'Windows') {
             $env:CUDA_PATH = $env:CONDA_PREFIX + '\\Library\\bin'
             $env:IncludePath = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:IncludePath
             $env:C_INCLUDE_PATH = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:C_INCLUDE_PATH
