@@ -106,7 +106,7 @@ jobs:
           if ("$($cudaParts[0]).$($cudaParts[1])" -eq "12.4") {$cudaParts[1] = '5'}
           $cudaMajor = $cudaParts[0]
           $cudaMajorMinor = "$($cudaParts[0]).$($cudaParts[1])"
-          conda config --set channel_priority strict
+          conda config --set channel_priority flexible # strict
           conda config --prepend channels nvidia
           conda config --append channels conda-forge
           #conda config --remove channels defaults
