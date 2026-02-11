@@ -103,7 +103,7 @@ jobs:
           $cudaVersion = $env:CUDAVER
           #$cudaMajor = $cudaVersion.Split('.')[0]
           $cudaParts = $cudaVersion -split '\.'
-          if ("$cudaParts[0].$cudaParts[1]" -eq "12.4") {$cudaParts[1] = '5'}
+          if ("$($cudaParts[0]).$($cudaParts[1])" -eq "12.4") {$cudaParts[1] = '5'}
           $cudaMajor = $cudaParts[0]
           $cudaMajorMinor = "$($cudaParts[0]).$($cudaParts[1])"
           mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-libraries-dev" "nvidia::cuda-cudart-dev" "nvidia::cuda-nvcc" "nvidia::cuda-version==$cudaMajorMinor.*" "conda-forge::gcc==13.*"
