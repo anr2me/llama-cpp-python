@@ -147,8 +147,8 @@ jobs:
             nvcc.exe --version
             Get-ChildItem -Path ~ -Filter "cicc.exe" -Recurse -ErrorAction SilentlyContinue
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\bin\\nvcc.exe")) {
-              #New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\bin" -Force
-              #New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\bin\\nvcc.exe" -Target "$env:CONDA_PREFIX\\Library\\bin\\nvcc.exe" # -Force
+              New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\bin" -Force
+              New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\bin\\nvcc.exe" -Target "$env:CONDA_PREFIX\\Library\\bin\\nvcc.exe" # -Force
             }
             #Get-ChildItem -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp" -Directory -Recurse -ErrorAction SilentlyContinue
           }
