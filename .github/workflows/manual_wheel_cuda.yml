@@ -108,6 +108,7 @@ jobs:
           $cudaMajorMinor = "$($cudaParts[0]).$($cudaParts[1])"
           conda config --set channel_priority strict
           conda config --prepend channels nvidia
+          conda config --remove channels conda-forge
           #conda config --append channels conda-forge
           #conda config --remove channels defaults
           conda config --show channels
@@ -133,7 +134,7 @@ jobs:
           } 
           elseif ($env:RUNNER_OS -eq 'Windows') {
             ##$env:CUDA_PATH = $env:CONDA_PREFIX + '\\Library\\bin'
-            $env:CUDACXX = $env:CONDA_PREFIX + '\\Library\\bin\\nvcc.exe'
+            #$env:CUDACXX = $env:CONDA_PREFIX + '\\Library\\bin\\nvcc.exe'
             #$env:IncludePath = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:IncludePath
             #$env:C_INCLUDE_PATH = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:C_INCLUDE_PATH
             #$env:CPLUS_INCLUDE_PATH = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:CPLUS_INCLUDE_PATH
