@@ -106,7 +106,7 @@ jobs:
           #if ("$($cudaParts[0]).$($cudaParts[1])" -eq "12.4") {$cudaParts[1] = '5'}
           $cudaMajor = $cudaParts[0]
           $cudaMajorMinor = "$($cudaParts[0]).$($cudaParts[1])"
-          conda config --set channel_priority flexible # strict
+          conda config --set channel_priority strict
           conda config --prepend channels nvidia
           conda config --append channels conda-forge
           #conda config --remove channels defaults
@@ -129,6 +129,7 @@ jobs:
           if ($IsLinux) {
             $env:LD_LIBRARY_PATH = $env:CONDA_PREFIX + '/lib:' + $env:CONDA_PREFIX + '/targets/x86_64-linux/lib:' + $env:LD_LIBRARY_PATH
             $env:CPATH = $env:CONDA_PREFIX + '/include:' + $env:CONDA_PREFIX + '/targets/x86_64-linux/include:' + $env:CPATH
+            Get-ChildItem -Path ~ -Filter "nvcc" -Recurse -ErrorAction SilentlyContinue
           } 
           elseif ($env:RUNNER_OS -eq 'Windows') {
             ##$env:CUDA_PATH = $env:CONDA_PREFIX + '\\Library\\bin'
