@@ -111,7 +111,7 @@ jobs:
           conda config --append channels conda-forge
           #conda config --remove channels defaults
           conda config --show channels
-          mamba install -y "cuda-version==$cudaMajorMinor.*" "cuda-toolkit==$cudaVersion" "cuda-nvcc" "cuda-cudart-dev" "gcc==13.*" "libstdcxx-ng"
+          mamba install -y "cuda-version==$cudaMajorMinor.*" "cuda-toolkit==$cudaVersion" "cuda-nvcc" "cuda-cudart-dev" "gcc==13.*" "conda-forge::libstdcxx-ng"
           #mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-libraries-dev" "nvidia::cuda-cudart-dev" "nvidia::cuda-nvcc" "nvidia::cuda-version==$cudaMajorMinor.*" "conda-forge::gcc==13.*"
           python -m pip install build wheel
 
