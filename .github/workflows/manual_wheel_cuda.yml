@@ -113,7 +113,7 @@ jobs:
           #conda config --remove channels defaults
           conda config --show channels
           #mamba install -y "nvidia::cuda-version==$cudaMajorMinor.*" "nvidia::cuda-toolkit" "nvidia::cuda-nvcc" "nvidia::cuda-cudart-dev" "conda-forge::gcc==13.*" # "conda-forge::libstdcxx-ng"
-          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-libraries-dev" "nvidia::cuda-cudart-dev" "nvidia::cuda-nvcc" "nvidia::cuda-version==$cudaMajorMinor.*" "conda-forge::gcc==13.*"
+          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-libraries-dev" "nvidia::cuda-cudart-dev" "nvidia::cuda-nvcc" "nvidia::cuda-nvvm" "nvidia::cuda-version==$cudaMajorMinor.*" "conda-forge::gcc==13.*"
           python -m pip install build wheel
 
       - name: Build Wheel
@@ -149,13 +149,9 @@ jobs:
             Get-ChildItem -Path ~ -Filter "nvcc.exe" -Recurse -ErrorAction SilentlyContinue
             nvcc.exe --version
             Get-ChildItem -Path ~ -Filter "cicc.exe" -Recurse -ErrorAction SilentlyContinue
-            if (-not (Test-Path -Path "$env:CONDA_PREFIX\\bin\\nvcc.exe")) {
-              New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\bin" -Force
-              New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\bin\\nvcc.exe" -Target "$env:CONDA_PREFIX\\Library\\bin\\nvcc.exe" # -Force
-            }
-            if (-not (Test-Path -Path "$env:CONDA_PREFIX\\nvvm\\bin\\cicc.exe")) {
-              New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\nvvm\\bin" -Force
-              New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\nvvm\\bin\\cicc.exe" -Target "$env:CONDA_PREFIX\\Library\\nvvm\\bin\\cicc.exe" # -Force
+            if (-not (Test-Path -Path "$env:CONDA_PREFIX\\bin")) {
+              #New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\bin" -Force
+              New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\bin" -Target "$env:CONDA_PREFIX\\Library\\bin" # -Force
             }
             #Get-ChildItem -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp" -Directory -Recurse -ErrorAction SilentlyContinue
           }
