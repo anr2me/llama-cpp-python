@@ -113,11 +113,12 @@ jobs:
           #conda config --remove channels defaults
           conda config --show channels
           #mamba install -y "nvidia::cuda-version==$cudaMajorMinor.*" "nvidia::cuda-toolkit" "nvidia::cuda-nvcc" "nvidia::cuda-cudart-dev" "conda-forge::gcc==13.*" # "conda-forge::libstdcxx-ng"
-          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-libraries-dev" "nvidia::cuda-cudart-dev" "nvidia::cuda-nvcc" "nvidia::cuda-nvvm" "nvidia::cuda-version==$cudaMajorMinor.*" "conda-forge::gcc==13.*"
+          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda-version==$cudaMajorMinor.*" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-libraries-dev" "nvidia::cuda-cudart-dev" "nvidia::cuda-nvvm" "nvidia::cuda-nvcc" "conda-forge::gcc==13.*"
           python -m pip install build wheel
 
       - name: Build Wheel
         run: |
+          $cpuArch = $env:PROCESSOR_ARCHITECTURE
           $cudaVersion = $env:CUDAVER.Remove($env:CUDAVER.LastIndexOf('.')).Replace('.','')
           #if ($env:RUNNER_OS -eq 'Windows') {
           #  $env:CONDA_PREFIX = $env:CONDA_PREFIX + '\Library'
@@ -128,15 +129,18 @@ jobs:
           $env:CUDAToolkit_ROOT = $env:CONDA_PREFIX
           echo "CONDA_PREFIX = $env:CONDA_PREFIX"
           if ($IsLinux) {
-            $env:LD_LIBRARY_PATH = $env:CONDA_PREFIX + '/lib:' + $env:CONDA_PREFIX + '/targets/x86_64-linux/lib:' + $env:LD_LIBRARY_PATH
-            $env:CPATH = $env:CONDA_PREFIX + '/include:' + $env:CONDA_PREFIX + '/targets/x86_64-linux/include:' + $env:CPATH
+            if ($cpuArch -eq 'AMD64') { $cpuArch = 'x86_64' }
+            $env:LD_LIBRARY_PATH = $env:CONDA_PREFIX + '/lib:' + $env:CONDA_PREFIX + "/targets/$cpuArch-linux/lib:" + $env:LD_LIBRARY_PATH
+            $env:CPATH = $env:CONDA_PREFIX + '/include:' + $env:CONDA_PREFIX + "/targets/$cpuArch-linux/include:" + $env:CPATH
             Get-ChildItem -Path ~ -Filter "nvcc" -Recurse -ErrorAction SilentlyContinue
+            Get-ChildItem -Path ~ -Filter "cicc" -Recurse -ErrorAction SilentlyContinue
           } 
-          elseif ($env:RUNNER_OS -eq 'Windows') {
+          elseif ($IsWindows) {
             $env:CUDA_TOOLKIT_ROOT_DIR += "\\Library"
             $env:CUDAToolkit_ROOT += "\\Library"
             $env:CUDA_PATH = $env:CONDA_PREFIX + '\\Library\\bin'
             $env:CUDA_INC_PATH = $env:CONDA_PREFIX + '\\Library\\include'
+            $env:CUDA_LIB_PATH = $env:CONDA_PREFIX + '\\Library\\lib'
             #$env:CUDACXX = $env:CONDA_PREFIX + '\\Library\\bin\\nvcc.exe'
             $env:IncludePath = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:IncludePath
             $env:C_INCLUDE_PATH = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:C_INCLUDE_PATH
