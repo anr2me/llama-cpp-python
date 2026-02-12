@@ -156,7 +156,7 @@ jobs:
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\bin")) {
               #New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\bin" -Force
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\bin" -Target "$env:CONDA_PREFIX\\Library\\bin" # -Force
-            }
+            } else { echo "Warning: bin directory already existed! Not creating symlink."}
             #Get-ChildItem -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp" -Directory -Recurse -ErrorAction SilentlyContinue
           }
           Get-ChildItem -Path ~ -Filter "cuda_runtime.h" -Recurse -ErrorAction SilentlyContinue
