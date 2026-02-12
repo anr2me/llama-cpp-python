@@ -106,13 +106,13 @@ jobs:
           #if ("$($cudaParts[0]).$($cudaParts[1])" -eq "12.4") {$cudaParts[1] = '5'}
           $cudaMajor = $cudaParts[0]
           $cudaMajorMinor = "$($cudaParts[0]).$($cudaParts[1])"
-          conda config --set channel_priority strict
+          conda config --set channel_priority flexible # strict
           conda config --prepend channels nvidia
           conda config --remove channels conda-forge
           #conda config --append channels conda-forge
           #conda config --remove channels defaults
           conda config --show channels
-          mamba install -y "nvidia::cuda-version==$cudaMajorMinor.*" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-nvcc" "nvidia::cuda-cudart-dev" "gcc==13.*" # "conda-forge::libstdcxx-ng"
+          mamba install -y "nvidia::cuda-version==$cudaMajorMinor.*" "nvidia::cuda-toolkit" "nvidia::cuda-nvcc" "nvidia::cuda-cudart-dev" "gcc==13.*" # "conda-forge::libstdcxx-ng"
           #mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-libraries-dev" "nvidia::cuda-cudart-dev" "nvidia::cuda-nvcc" "nvidia::cuda-version==$cudaMajorMinor.*" "conda-forge::gcc==13.*"
           python -m pip install build wheel
 
