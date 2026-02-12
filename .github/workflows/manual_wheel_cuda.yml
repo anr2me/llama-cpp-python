@@ -153,6 +153,10 @@ jobs:
               New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\bin" -Force
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\bin\\nvcc.exe" -Target "$env:CONDA_PREFIX\\Library\\bin\\nvcc.exe" # -Force
             }
+            if (-not (Test-Path -Path "$env:CONDA_PREFIX\\nvvm\\bin\\cicc.exe")) {
+              New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\nvvm\\bin" -Force
+              New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\nvvm\\bin\\cicc.exe" -Target "$env:CONDA_PREFIX\\Library\\nvvm\\bin\\cicc.exe" # -Force
+            }
             #Get-ChildItem -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp" -Directory -Recurse -ErrorAction SilentlyContinue
           }
           Get-ChildItem -Path ~ -Filter "cuda_runtime.h" -Recurse -ErrorAction SilentlyContinue
