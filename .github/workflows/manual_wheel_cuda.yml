@@ -140,7 +140,7 @@ jobs:
             #$env:CPLUS_INCLUDE_PATH = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:CPLUS_INCLUDE_PATH
             #$env:INCLUDE = $env:CONDA_PREFIX + '\include;' + $env:CONDA_PREFIX + '\Library\include;' + $env:INCLUDE
             #$env:CL='/I\' + $env:CONDA_PREFIX + '\Library\include'
-            #$env:Path = "$env:CONDA_PREFIX\\bin; $env:CONDA_PREFIX\\Library\\bin; $env:CONDA_PREFIX\\nvvm\\bin;" + $env:Path
+            $env:Path = "$env:CONDA_PREFIX\\bin; $env:CONDA_PREFIX\\Library\\bin; $env:CONDA_PREFIX\\nvvm\\bin;" + $env:Path
             #echo "$env:CONDA_PREFIX\\Library\\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
             #echo "$env:CONDA_PREFIX\\nvvm\\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
             Get-ChildItem -Path ~ -Filter "nvcc.exe" -Recurse -ErrorAction SilentlyContinue
