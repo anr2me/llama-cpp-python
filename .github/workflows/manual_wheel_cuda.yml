@@ -113,7 +113,7 @@ jobs:
           #conda config --remove channels defaults
           conda config --show channels
           #mamba install -y "nvidia::cuda-version==$cudaMajorMinor.*" "nvidia::cuda-toolkit" "nvidia::cuda-nvcc" "nvidia::cuda-cudart-dev" "conda-forge::gcc==13.*" # "conda-forge::libstdcxx-ng"
-          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda-version==$cudaMajorMinor.*" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-libraries-dev" "nvidia::cuda-cudart-dev" "nvidia::cuda-nvvm" "nvidia::cuda-nvcc" "conda-forge::gcc==13.*"
+          mamba install -y -c "nvidia/label/cuda-$cudaVersion" "nvidia::cuda-version==$cudaMajorMinor.*" "nvidia::cuda-toolkit==$cudaVersion" "nvidia::cuda-libraries-dev" "nvidia::cuda-cudart-dev" "nvidia::cuda-cccl" "nvidia::cuda-nvvm" "nvidia::cuda-nvcc" "conda-forge::gcc==13.*"
           python -m pip install build wheel
 
       - name: Build Wheel
@@ -127,6 +127,7 @@ jobs:
           $env:CUDA_HOME = $env:CONDA_PREFIX
           $env:CUDA_TOOLKIT_ROOT_DIR = $env:CONDA_PREFIX
           $env:CUDAToolkit_ROOT = $env:CONDA_PREFIX
+          $env:CUDATOOLKITDIR = $env:CONDA_PREFIX
           echo "CONDA_PREFIX = $env:CONDA_PREFIX"
           if ($IsLinux) {
             if ($cpuArch -eq 'AMD64') { $cpuArch = 'x86_64' }
