@@ -154,6 +154,7 @@ jobs:
             Get-ChildItem -Path ~ -Filter "nvcc.exe" -Recurse -ErrorAction SilentlyContinue
             nvcc.exe --version
             Get-ChildItem -Path ~ -Filter "cicc.exe" -Recurse -ErrorAction SilentlyContinue
+            Get-ChildItem -Path ~ -Filter "cudart_static.lib" -Recurse -ErrorAction SilentlyContinue
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\bin")) {
               #New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\bin" -Force
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\bin" -Target "$env:CONDA_PREFIX\\Library\\bin" # -Force
