@@ -167,7 +167,13 @@ jobs:
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\lib")) {
               #New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\lib" -Force
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib" -Target "$env:CONDA_PREFIX\\Library\\lib" # -Force
-            } else { echo "Warning: lib directory already existed! Not creating symlink."}
+            } else { 
+              echo "Warning: lib directory already existed! Not creating symlink."
+              if (-not (Test-Path -Path "$env:CONDA_PREFIX\\lib\\x64")) {
+                #New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\lib\\x64" -Force
+                New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib\\x64" -Target "$env:CONDA_PREFIX\\Library\\lib\\x64" # -Force
+              } else { echo "Warning: lib\x64 directory already existed! Not creating symlink."}
+            }
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\lib64")) {
               #New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\lib64" -Force
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib64" -Target "$env:CONDA_PREFIX\\Library\\lib" # -Force
