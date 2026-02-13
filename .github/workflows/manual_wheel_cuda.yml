@@ -172,6 +172,10 @@ jobs:
               #New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\lib64" -Force
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib64" -Target "$env:CONDA_PREFIX\\Library\\lib" # -Force
             } else { echo "Warning: lib64 directory already existed! Not creating symlink."}
+            if (-not (Test-Path -Path "$env:CONDA_PREFIX\\include")) {
+              #New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\include" -Force
+              New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\include" -Target "$env:CONDA_PREFIX\\Library\\include" # -Force
+            } else { echo "Warning: include directory already existed! Not creating symlink."}
             #Get-ChildItem -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp" -Directory -Recurse -ErrorAction SilentlyContinue
           }
           Get-ChildItem -Path ~ -Filter "cuda_runtime.h" -Recurse -ErrorAction SilentlyContinue
