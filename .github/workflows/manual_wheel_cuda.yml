@@ -106,7 +106,7 @@ jobs:
           $cudaMajor = $cudaParts[0]
           $cudaMajorMinor = "$($cudaParts[0]).$($cudaParts[1])"
           conda config --set channel_priority flexible # strict
-          conda config --prepend channels nvidia
+          #conda config --prepend channels nvidia
           conda config --append channels conda-forge
           #conda config --remove channels defaults
           conda config --show channels
