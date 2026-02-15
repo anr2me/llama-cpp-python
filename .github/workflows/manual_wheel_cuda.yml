@@ -101,7 +101,6 @@ jobs:
           MAMBA_NO_LOW_SPEED_LIMIT: "1"
         run: |
           $cudaVersion = $env:CUDAVER
-          #$cudaMajor = $cudaVersion.Split('.')[0]
           $cudaParts = $cudaVersion -split '\.'
           #if ("$($cudaParts[0]).$($cudaParts[1])" -eq "12.4") {$cudaParts[1] = '5'}
           $cudaMajor = $cudaParts[0]
@@ -119,6 +118,7 @@ jobs:
         run: |
           $cpuArch = $env:PROCESSOR_ARCHITECTURE
           $cudaVersion = $env:CUDAVER.Remove($env:CUDAVER.LastIndexOf('.')).Replace('.','')
+          $cudaMajor = $cudaVersion.Split('.')[0]
           #if ($env:RUNNER_OS -eq 'Windows') {
           #  $env:CONDA_PREFIX = $env:CONDA_PREFIX + '\Library'
           #}
