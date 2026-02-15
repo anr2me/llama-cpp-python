@@ -157,28 +157,28 @@ jobs:
             Get-ChildItem -Path ~ -Filter "cicc.exe" -Recurse -ErrorAction SilentlyContinue
             Get-ChildItem -Path ~ -Filter "cudart_static.lib" -Recurse -ErrorAction SilentlyContinue
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\bin")) {
-              New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\bin" -Target "$env:CONDA_PREFIX\\Library\\bin" # -Force
+              New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\bin" -Target "$env:CONDA_PREFIX\\Library\\bin"
             } else { echo "Warning: bin directory already existed! Not creating symlink."}
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\nvvm")) {
-              New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\nvvm" -Target "$env:CONDA_PREFIX\\Library\\nvvm" # -Force
+              New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\nvvm" -Target "$env:CONDA_PREFIX\\Library\\nvvm"
             } else { echo "Warning: nvvm directory already existed! Not creating symlink."}
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\lib")) {
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib" -Target "$env:CONDA_PREFIX\\Library\\lib" # -Force
             } else { 
               echo "Warning: lib directory already existed! Not creating symlink."
               if (-not (Test-Path -Path "$env:CONDA_PREFIX\\lib\\x64")) {
-                #if (-not (Test-Path -Path "$env:CONDA_PREFIX\\Library\\lib\\x64")) {
-                  New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib\\x64" -Target "$env:CONDA_PREFIX\\Library\\lib" # -Force
-                #} else {
-                  #New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib\\x64" -Target "$env:CONDA_PREFIX\\Library\\lib\\x64" # -Force
-                #}
+                if ([int]$cudaMajor -ge 13) {
+                  New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib\\x64" -Target "$env:CONDA_PREFIX\\Library\\lib\\x64"
+                } else {
+                  New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib\\x64" -Target "$env:CONDA_PREFIX\\Library\\lib"
+                }
               } else { echo "Warning: lib\x64 directory already existed! Not creating symlink."}
             }
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\lib64")) {
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib64" -Target "$env:CONDA_PREFIX\\Library\\lib" # -Force
             } else { echo "Warning: lib64 directory already existed! Not creating symlink."}
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\include")) {
-              New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\include" -Target "$env:CONDA_PREFIX\\Library\\include" # -Force
+              New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\include" -Target "$env:CONDA_PREFIX\\Library\\include"
             } else { echo "Warning: include directory already existed! Not creating symlink."}
             #Get-ChildItem -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp" -Directory -Recurse -ErrorAction SilentlyContinue
           }
