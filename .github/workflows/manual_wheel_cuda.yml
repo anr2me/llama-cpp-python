@@ -157,15 +157,12 @@ jobs:
             Get-ChildItem -Path ~ -Filter "cicc.exe" -Recurse -ErrorAction SilentlyContinue
             Get-ChildItem -Path ~ -Filter "cudart_static.lib" -Recurse -ErrorAction SilentlyContinue
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\bin")) {
-              #New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\bin" -Force
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\bin" -Target "$env:CONDA_PREFIX\\Library\\bin" # -Force
             } else { echo "Warning: bin directory already existed! Not creating symlink."}
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\nvvm")) {
-              #New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\nvvm" -Force
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\nvvm" -Target "$env:CONDA_PREFIX\\Library\\nvvm" # -Force
             } else { echo "Warning: nvvm directory already existed! Not creating symlink."}
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\lib")) {
-              #New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\lib" -Force
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib" -Target "$env:CONDA_PREFIX\\Library\\lib" # -Force
             } else { 
               echo "Warning: lib directory already existed! Not creating symlink."
@@ -178,11 +175,9 @@ jobs:
               } else { echo "Warning: lib\x64 directory already existed! Not creating symlink."}
             }
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\lib64")) {
-              #New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\lib64" -Force
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib64" -Target "$env:CONDA_PREFIX\\Library\\lib" # -Force
             } else { echo "Warning: lib64 directory already existed! Not creating symlink."}
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\include")) {
-              #New-Item -ItemType Directory -Path "$env:CONDA_PREFIX\\include" -Force
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\include" -Target "$env:CONDA_PREFIX\\Library\\include" # -Force
             } else { echo "Warning: include directory already existed! Not creating symlink."}
             #Get-ChildItem -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp" -Directory -Recurse -ErrorAction SilentlyContinue
@@ -195,9 +190,10 @@ jobs:
           #$env:CMAKE_BUILD_PARALLEL_LEVEL=4
           $env:CMAKE_ARGS = '-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=all'
           $env:CMAKE_ARGS = "-DGGML_CUDA_FORCE_MMQ=ON $env:CMAKE_ARGS"
-          #if ($env:RUNNER_OS -eq 'Windows') {
-          #  $env:CMAKE_ARGS = "-DCMAKE_CUDA_COMPILER='$env:CONDA_PREFIX\\Library\\bin' $env:CMAKE_ARGS"
-          #}
+          if ($env:RUNNER_OS -eq 'Windows') {
+            #$env:CMAKE_ARGS = "-DCMAKE_CUDA_COMPILER='$env:CONDA_PREFIX\\Library\\bin' $env:CMAKE_ARGS"
+            $env:CMAKE_ARGS = "-DCMAKE_LINKER_FLAGS='/LIBPATH:$env:CONDA_PREFIX\\Library\\lib' $env:CMAKE_ARGS"
+          }
           #$env:CMAKE_ARGS = "-DCMAKE_CUDA_FLAGS='-allow-unsupported-compiler' $env:CMAKE_ARGS"
           # if ($env:AVXVER -eq 'AVX') {
           $env:CMAKE_ARGS = $env:CMAKE_ARGS + ' -DGGML_AVX2=off -DGGML_FMA=off -DGGML_F16C=off'
