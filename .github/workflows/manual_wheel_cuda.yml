@@ -118,7 +118,7 @@ jobs:
         run: |
           $cpuArch = $env:PROCESSOR_ARCHITECTURE
           $cudaVersion = $env:CUDAVER.Remove($env:CUDAVER.LastIndexOf('.')).Replace('.','')
-          $cudaMajor = $cudaVersion.Split('.')[0]
+          $cudaMajor = $env:CUDAVER.Split('.')[0]
           #if ($env:RUNNER_OS -eq 'Windows') {
           #  $env:CONDA_PREFIX = $env:CONDA_PREFIX + '\Library'
           #}
