@@ -146,8 +146,8 @@ jobs:
             #$env:LIBPATH = $env:CONDA_PREFIX + '\\lib;' + $env:CONDA_PREFIX + '\\lib64;' + $env:CONDA_PREFIX + '\\Library\\lib;' + $env:CONDA_PREFIX + '\\Library\\lib64;' + $env:CONDA_PREFIX + '\\Library\\lib\\x64;' + $env:LIBPATH
             #$env:IncludePath = $env:CONDA_PREFIX + '\\include;' + $env:CONDA_PREFIX + '\\Library\\include;' + $env:IncludePath
             $env:C_INCLUDE_PATH = $env:CONDA_PREFIX + '\\include;' + $env:CONDA_PREFIX + '\\Library\\include;' + $env:C_INCLUDE_PATH
-            #$env:CPLUS_INCLUDE_PATH = $env:CONDA_PREFIX + '\\include;' + $env:CONDA_PREFIX + '\\Library\\include;' + $env:CPLUS_INCLUDE_PATH
-            #$env:INCLUDE = $env:CONDA_PREFIX + '\\include;' + $env:CONDA_PREFIX + '\\Library\\include;' + $env:INCLUDE
+            $env:CPLUS_INCLUDE_PATH = $env:CONDA_PREFIX + '\\include;' + $env:CONDA_PREFIX + '\\Library\\include;' + $env:CPLUS_INCLUDE_PATH
+            $env:INCLUDE = $env:CONDA_PREFIX + '\\include;' + $env:CONDA_PREFIX + '\\Library\\include;' + $env:INCLUDE
             #$env:CL='/I\' + $env:CONDA_PREFIX + '\\Library\\include'
             $env:Path = "$env:CONDA_PREFIX\\bin; $env:CONDA_PREFIX\\Library\\bin; $env:CONDA_PREFIX\\nvvm\\bin; $env:CONDA_PREFIX\\Library\\nvvm\\bin;" + $env:Path
             #echo "$env:CONDA_PREFIX\\Library\\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
