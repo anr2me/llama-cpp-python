@@ -111,7 +111,7 @@ jobs:
           #conda config --remove channels defaults
           conda config --show channels
           #mamba install -y "nvidia::cuda-version==$cudaMajorMinor.*" "nvidia::cuda-toolkit" "nvidia::cuda-nvcc" "nvidia::cuda-cudart-dev" "conda-forge::gcc==13.*" # "conda-forge::libstdcxx-ng"
-          mamba install -y -c conda-forge "cuda-version==$cudaMajorMinor.*" "cuda-toolkit" "cuda-cudart-dev" "cuda-cccl" "cuda-nvvm" "cuda-nvcc" "conda-forge::gcc==13.*" # -c "nvidia/label/cuda-$cudaVersion" "cuda-libraries-dev" "nvidia::cuda-thrust" 
+          mamba install -y -c conda-forge "cuda-version==$cudaMajorMinor.*" "cuda-toolkit" "cuda-cudart-dev" "cuda-cccl" "cuda-nvvm" "cuda-nvcc" # "conda-forge::gcc==13.*" # -c "nvidia/label/cuda-$cudaVersion" "cuda-libraries-dev" "nvidia::cuda-thrust" 
           python -m pip install build wheel
 
       - name: Build Wheel
