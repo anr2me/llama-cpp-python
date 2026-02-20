@@ -20,7 +20,7 @@ jobs:
         id: set-matrix
         run: |
           $matrix = @{
-              'os' = @('windows-2022') # 'ubuntu-22.04', 
+              'os' = @('ubuntu-22.04', 'windows-2022') # 
               'pyver' = @("3.9", "3.10", "3.11", "3.12") # ,"3.13", "3.14"
               'cuda' = @("12.5.1", "12.6.3", "12.8.1", "13.0.2") # "12.1.1", "12.2.2", "12.3.2", "12.4.1", "12.9.1", "13.1.0"
               'releasetag' = @("basic")
@@ -192,10 +192,10 @@ jobs:
           #$env:CMAKE_GENERATOR_TOOLSET = $env:CUDA_HOME
           $env:CMAKE_ARGS = '-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=all'
           $env:CMAKE_ARGS = "-DGGML_CUDA_FORCE_MMQ=ON $env:CMAKE_ARGS"
-          if ($env:RUNNER_OS -eq 'Windows') {
+          #if ($env:RUNNER_OS -eq 'Windows') {
             ##$env:CMAKE_ARGS = "-DCMAKE_CUDA_COMPILER='$env:CONDA_PREFIX\\Library\\bin' $env:CMAKE_ARGS"
-            #$env:CMAKE_ARGS = "-DCMAKE_LINKER_FLAGS='/LIBPATH:$env:CONDA_PREFIX\\Library\\lib' $env:CMAKE_ARGS"
-          }
+            ##$env:CMAKE_ARGS = "-DCMAKE_LINKER_FLAGS='/LIBPATH:$env:CONDA_PREFIX\\Library\\lib' $env:CMAKE_ARGS"
+          #}
           #$env:CMAKE_ARGS = "-DCMAKE_CUDA_FLAGS='-allow-unsupported-compiler' $env:CMAKE_ARGS"
           # if ($env:AVXVER -eq 'AVX') {
           $env:CMAKE_ARGS = $env:CMAKE_ARGS + ' -DGGML_AVX2=off -DGGML_FMA=off -DGGML_F16C=off'
