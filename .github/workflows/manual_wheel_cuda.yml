@@ -136,8 +136,9 @@ jobs:
             Get-ChildItem -Path ~ -Filter "cicc" -Recurse -ErrorAction SilentlyContinue
           } 
           elseif ($IsWindows) {
-            #$env:CUDA_TOOLKIT_ROOT_DIR += "\\Library"
-            #$env:CUDAToolkit_ROOT += "\\Library"
+            if ($cpuArch -eq 'AMD64') { $cpuArch = 'x64' } 
+            $env:CUDA_TOOLKIT_ROOT_DIR += "\\Library"
+            $env:CUDAToolkit_ROOT += "\\Library"
             ##$env:CUDA_PATH = $env:CONDA_PREFIX + '\\Library\\bin'
             ##$env:CUDA_INC_PATH = $env:CONDA_PREFIX + '\\Library\\include'
             ##$env:CUDA_LIB_PATH = $env:CONDA_PREFIX + '\\Library\\lib'
@@ -156,6 +157,9 @@ jobs:
             nvcc.exe --version
             Get-ChildItem -Path ~ -Filter "cicc.exe" -Recurse -ErrorAction SilentlyContinue
             Get-ChildItem -Path ~ -Filter "cudart_static.lib" -Recurse -ErrorAction SilentlyContinue
+            if (-not (Test-Path -Path "$env:CONDA_PREFIX\\include")) {
+              New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\include" -Target "$env:CONDA_PREFIX\\Library\\include"
+            } else { echo "Warning: include directory already existed! Not creating symlink."}
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\bin")) {
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\bin" -Target "$env:CONDA_PREFIX\\Library\\bin"
             } else { echo "Warning: bin directory already existed! Not creating symlink."}
@@ -166,20 +170,17 @@ jobs:
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib" -Target "$env:CONDA_PREFIX\\Library\\lib" # -Force
             } else { 
               echo "Warning: lib directory already existed! Not creating symlink."
-              if (-not (Test-Path -Path "$env:CONDA_PREFIX\\lib\\x64")) {
+              if (-not (Test-Path -Path "$env:CONDA_PREFIX\\lib\\$cpuArch")) {
                 if ([int]$cudaMajor -ge 13) {
-                  New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib\\x64" -Target "$env:CONDA_PREFIX\\Library\\lib\\x64"
+                  New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib\\$cpuArch" -Target "$env:CONDA_PREFIX\\Library\\lib\\$cpuArch"
                 } else {
-                  New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib\\x64" -Target "$env:CONDA_PREFIX\\Library\\lib"
+                  New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib\\cpuArch" -Target "$env:CONDA_PREFIX\\Library\\lib"
                 }
-              } else { echo "Warning: lib\x64 directory already existed! Not creating symlink."}
+              } else { echo "Warning: lib\$cpuArch directory already existed! Not creating symlink."}
             }
             if (-not (Test-Path -Path "$env:CONDA_PREFIX\\lib64")) {
               New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\lib64" -Target "$env:CONDA_PREFIX\\Library\\lib" # -Force
             } else { echo "Warning: lib64 directory already existed! Not creating symlink."}
-            if (-not (Test-Path -Path "$env:CONDA_PREFIX\\include")) {
-              New-Item -ItemType SymbolicLink -Path "$env:CONDA_PREFIX\\include" -Target "$env:CONDA_PREFIX\\Library\\include"
-            } else { echo "Warning: include directory already existed! Not creating symlink."}
             #Get-ChildItem -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp" -Directory -Recurse -ErrorAction SilentlyContinue
           }
           Get-ChildItem -Path ~ -Filter "cuda_runtime.h" -Recurse -ErrorAction SilentlyContinue
@@ -192,8 +193,8 @@ jobs:
           $env:CMAKE_ARGS = '-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=all'
           $env:CMAKE_ARGS = "-DGGML_CUDA_FORCE_MMQ=ON $env:CMAKE_ARGS"
           if ($env:RUNNER_OS -eq 'Windows') {
-            #$env:CMAKE_ARGS = "-DCMAKE_CUDA_COMPILER='$env:CONDA_PREFIX\\Library\\bin' $env:CMAKE_ARGS"
-            $env:CMAKE_ARGS = "-DCMAKE_LINKER_FLAGS='/LIBPATH:$env:CONDA_PREFIX\\Library\\lib' $env:CMAKE_ARGS"
+            ##$env:CMAKE_ARGS = "-DCMAKE_CUDA_COMPILER='$env:CONDA_PREFIX\\Library\\bin' $env:CMAKE_ARGS"
+            #$env:CMAKE_ARGS = "-DCMAKE_LINKER_FLAGS='/LIBPATH:$env:CONDA_PREFIX\\Library\\lib' $env:CMAKE_ARGS"
           }
           #$env:CMAKE_ARGS = "-DCMAKE_CUDA_FLAGS='-allow-unsupported-compiler' $env:CMAKE_ARGS"
           # if ($env:AVXVER -eq 'AVX') {
