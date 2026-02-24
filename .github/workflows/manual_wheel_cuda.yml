@@ -185,6 +185,11 @@ jobs:
             #Get-ChildItem -Path "C:\Users\runneradmin\miniconda3\envs\llamacpp" -Directory -Recurse -ErrorAction SilentlyContinue
           }
           Get-ChildItem -Path ~ -Filter "cuda_runtime.h" -Recurse -ErrorAction SilentlyContinue
+          
+          # Applying Windows CUDA DLL Patch from PR 2083
+          curl -L -O https://github.com/abetlen/llama-cpp-python/pull/2083.patch
+          git am 2083.patch
+          
           #$env:VERBOSE = '1'
           #$env:NVCCFLAGS="-allow-unsupported-compiler"
           #$env:FORCE_CMAKE=1
