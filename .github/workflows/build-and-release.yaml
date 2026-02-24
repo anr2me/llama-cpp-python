@@ -26,6 +26,7 @@ jobs:
       - name: Install dependencies (Linux/MacOS)
         if: runner.os != 'Windows'
         run: |
+          source /opt/rh/gcc-toolset-14/enable
           python -m pip install --upgrade pip
           python -m pip install uv
           RUST_LOG=trace python -m uv pip install -e .[all] --verbose
@@ -101,6 +102,7 @@ jobs:
       - name: Install dependencies (Linux/MacOS)
         if: runner.os != 'Windows'
         run: |
+          source /opt/rh/gcc-toolset-14/enable
           python -m pip install --upgrade pip
           python -m pip install uv
           RUST_LOG=trace python -m uv pip install -e .[all] --verbose
