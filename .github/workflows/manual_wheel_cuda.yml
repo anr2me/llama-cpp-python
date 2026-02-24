@@ -20,7 +20,7 @@ jobs:
         id: set-matrix
         run: |
           $matrix = @{
-              'os' = @('ubuntu-22.04', 'windows-2022') # 
+              'os' = @('ubuntu-22.04-arm') # , 'ubuntu-22.04-arm', 'windows-2022'
               'pyver' = @("3.9", "3.10", "3.11", "3.12", "3.13", "3.14") #
               'cuda' = @("12.5.1", "12.6.3", "12.8.1", "13.0.2") # "12.1.1", "12.2.2", "12.3.2", "12.4.1", "12.9.1", "13.1.0"
               'releasetag' = @("basic")
@@ -129,7 +129,8 @@ jobs:
           $env:CUDATOOLKITDIR = $env:CONDA_PREFIX
           echo "CONDA_PREFIX = $env:CONDA_PREFIX"
           if ($IsLinux) {
-            if ($cpuArch -eq 'AMD64') { $cpuArch = 'x86_64' }
+            #if ($cpuArch -eq 'AMD64') { $cpuArch = 'x86_64' }
+            $cpuArch = uname -m
             $env:LD_LIBRARY_PATH = $env:CONDA_PREFIX + '/lib:' + $env:CONDA_PREFIX + "/targets/$cpuArch-linux/lib:" + $env:LD_LIBRARY_PATH
             $env:CPATH = $env:CONDA_PREFIX + '/include:' + $env:CONDA_PREFIX + "/targets/$cpuArch-linux/include:" + $env:CPATH
             Get-ChildItem -Path ~ -Filter "nvcc" -Recurse -ErrorAction SilentlyContinue
