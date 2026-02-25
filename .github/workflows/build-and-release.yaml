@@ -28,14 +28,6 @@ jobs:
         env:
           CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF"
         run: |
-          if [ "$RUNNER_OS" == "Linux" ]; then 
-            sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-            sudo apt-get update
-            #sudo apt-get install -y gcc-14 g++-14
-            #sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 100
-            #sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
-            gcc --version
-          fi
           python -m pip install --upgrade pip
           python -m pip install uv
           RUST_LOG=trace python -m uv pip install -e .[all] --verbose
@@ -115,14 +107,6 @@ jobs:
         env:
           CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF"
         run: |
-          if [ "$RUNNER_OS" == "Linux" ]; then 
-            sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-            sudo apt-get update
-            #sudo apt-get install -y gcc-14 g++-14
-            #sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 100
-            #sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
-            gcc --version
-          fi
           python -m pip install --upgrade pip
           python -m pip install uv
           RUST_LOG=trace python -m uv pip install -e .[all] --verbose
