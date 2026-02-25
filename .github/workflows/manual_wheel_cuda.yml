@@ -188,7 +188,7 @@ jobs:
           
           # Applying Windows CUDA DLL Patch from PR 2083
           curl -L -O https://github.com/abetlen/llama-cpp-python/pull/2083.patch
-          git am 2083.patch
+          git apply 2083.patch # git am
           
           #$env:VERBOSE = '1'
           #$env:NVCCFLAGS="-allow-unsupported-compiler"
