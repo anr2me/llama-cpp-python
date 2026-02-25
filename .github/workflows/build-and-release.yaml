@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies (Linux/MacOS)
         if: runner.os != 'Windows'
         env:
-          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF"
+          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
         run: |
           python -m pip install --upgrade pip
           python -m pip install uv
@@ -37,7 +37,7 @@ jobs:
         if: runner.os == 'Windows'
         env:
           RUST_LOG: trace
-          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF"
+          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
         run: |
           python -m pip install --upgrade pip
           python -m pip install uv
@@ -49,7 +49,7 @@ jobs:
         env:
           # disable repair
           CIBW_REPAIR_WHEEL_COMMAND: ""
-          CIBW_ENVIRONMENT: CMAKE_ARGS="-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF"
+          CIBW_ENVIRONMENT: CMAKE_ARGS="-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -78,7 +78,7 @@ jobs:
           CIBW_SKIP: "*musllinux* pp*"
           CIBW_REPAIR_WHEEL_COMMAND: ""
           CIBW_ARCHS: "aarch64"
-          CIBW_ENVIRONMENT: CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DCMAKE_CROSSCOMPILING=ON -DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF"
+          CIBW_ENVIRONMENT: CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DCMAKE_CROSSCOMPILING=ON -DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
           CIBW_BUILD: "cp39-* cp310-* cp311-* cp312-* cp313-* cp314-*"
         with:
           output-dir: wheelhouse
@@ -105,7 +105,7 @@ jobs:
       - name: Install dependencies (Linux/MacOS)
         if: runner.os != 'Windows'
         env:
-          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF"
+          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
         run: |
           python -m pip install --upgrade pip
           python -m pip install uv
@@ -117,7 +117,7 @@ jobs:
         if: runner.os == 'Windows'
         env:
           RUST_LOG: trace
-          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF"
+          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
         run: |
           python -m pip install --upgrade pip
           python -m pip install uv
