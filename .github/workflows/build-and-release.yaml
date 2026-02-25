@@ -32,6 +32,8 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y libopenblas-dev
             CMAKE_ARGS="$CMAKE_ARGS -DGGML_BLAS_VENDOR=OpenBLAS"
+          else
+            CMAKE_ARGS="$CMAKE_ARGS -DGGML_BLAS_VENDOR=Accelerate"
           fi
           python -m pip install --upgrade pip
           python -m pip install uv
@@ -85,7 +87,7 @@ jobs:
           CIBW_SKIP: "*musllinux* pp*"
           CIBW_REPAIR_WHEEL_COMMAND: ""
           CIBW_ARCHS: "aarch64"
-          CIBW_ENVIRONMENT: CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DCMAKE_CROSSCOMPILING=ON -DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON"
+          CIBW_ENVIRONMENT: CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DCMAKE_CROSSCOMPILING=ON -DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=Accelerate"
           CIBW_BEFORE_ALL_LINUX: "yum install -y openblas-devel"
           CIBW_BUILD: "cp39-* cp310-* cp311-* cp312-* cp313-* cp314-*"
         with:
@@ -119,6 +121,8 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y libopenblas-dev
             CMAKE_ARGS="$CMAKE_ARGS -DGGML_BLAS_VENDOR=OpenBLAS"
+          else
+            CMAKE_ARGS="$CMAKE_ARGS -DGGML_BLAS_VENDOR=Accelerate"
           fi
           python -m pip install --upgrade pip
           python -m pip install uv
