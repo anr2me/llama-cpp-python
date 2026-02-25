@@ -26,6 +26,7 @@ jobs:
       - name: Install dependencies (Linux/MacOS)
         if: runner.os != 'Windows'
         env:
+          #RUST_LOG: trace 
           CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF"
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
@@ -36,13 +37,13 @@ jobs:
           echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
           python -m pip install --upgrade pip
           python -m pip install uv
-          RUST_LOG=trace python -m uv pip install -e .[all] --verbose
+          python -m uv pip install -e .[all] --verbose
         shell: bash
 
       - name: Install dependencies (Windows)
         if: runner.os == 'Windows'
         env:
-          RUST_LOG: trace
+          #RUST_LOG: trace
           CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
         run: |
           echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
@@ -117,6 +118,7 @@ jobs:
       - name: Install dependencies (Linux/MacOS)
         if: runner.os != 'Windows'
         env:
+          #RUST_LOG: trace
           CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF"
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
@@ -127,14 +129,14 @@ jobs:
           echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
           python -m pip install --upgrade pip
           python -m pip install uv
-          RUST_LOG=trace python -m uv pip install -e .[all] --verbose
+          python -m uv pip install -e .[all] --verbose
           python -m uv pip install build
         shell: bash
 
       - name: Install dependencies (Windows)
         if: runner.os == 'Windows'
         env:
-          RUST_LOG: trace
+          #RUST_LOG: trace
           CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
         run: |
           echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
