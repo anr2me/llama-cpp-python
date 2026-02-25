@@ -32,8 +32,8 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y libopenblas-dev
             CMAKE_ARGS="$CMAKE_ARGS -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
-            echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
           fi
+          echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
           python -m pip install --upgrade pip
           python -m pip install uv
           RUST_LOG=trace python -m uv pip install -e .[all] --verbose
@@ -45,6 +45,7 @@ jobs:
           RUST_LOG: trace
           CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
         run: |
+          echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
           vcpkg install openblas
           python -m pip install --upgrade pip
           python -m pip install uv
@@ -86,8 +87,10 @@ jobs:
           CIBW_SKIP: "*musllinux* pp*"
           CIBW_REPAIR_WHEEL_COMMAND: ""
           CIBW_ARCHS: "aarch64"
-          CIBW_ENVIRONMENT: CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DCMAKE_CROSSCOMPILING=ON -DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
+          CIBW_ENVIRONMENT: CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DCMAKE_CROSSCOMPILING=ON -DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF"
           CIBW_BEFORE_ALL_LINUX: "yum install -y openblas-devel"
+          CIBW_BEFORE_ALL_MACOS: "brew install openblas"
+          CIBW_BEFORE_ALL_WINDOWS: "vcpkg install openblas"
           CIBW_BUILD: "cp39-* cp310-* cp311-* cp312-* cp313-* cp314-*"
         with:
           output-dir: wheelhouse
@@ -120,8 +123,8 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y libopenblas-dev
             CMAKE_ARGS="$CMAKE_ARGS -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
-            echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
           fi
+          echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
           python -m pip install --upgrade pip
           python -m pip install uv
           RUST_LOG=trace python -m uv pip install -e .[all] --verbose
@@ -134,6 +137,7 @@ jobs:
           RUST_LOG: trace
           CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
         run: |
+          echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
           vcpkg install openblas
           python -m pip install --upgrade pip
           python -m pip install uv
