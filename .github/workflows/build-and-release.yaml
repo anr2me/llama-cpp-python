@@ -31,6 +31,7 @@ jobs:
           if [ "$RUNNER_OS" == "Linux" ]; then
             sudo apt-get update
             sudo apt-get install -y libopenblas-dev
+            CMAKE_ARGS="$CMAKE_ARGS -DGGML_BLAS_VENDOR=OpenBLAS"
           fi
           python -m pip install --upgrade pip
           python -m pip install uv
@@ -41,7 +42,7 @@ jobs:
         if: runner.os == 'Windows'
         env:
           RUST_LOG: trace
-          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON"
+          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
         run: |
           vcpkg install openblas
           python -m pip install --upgrade pip
@@ -54,7 +55,7 @@ jobs:
         env:
           # disable repair
           CIBW_REPAIR_WHEEL_COMMAND: ""
-          CIBW_ENVIRONMENT: CMAKE_ARGS="-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON"
+          CIBW_ENVIRONMENT: CMAKE_ARGS="-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
           CIBW_BEFORE_ALL_LINUX: "yum install -y openblas-devel"
         with:
           package-dir: .
@@ -117,6 +118,7 @@ jobs:
           if [ "$RUNNER_OS" == "Linux" ]; then
             sudo apt-get update
             sudo apt-get install -y libopenblas-dev
+            CMAKE_ARGS="$CMAKE_ARGS -DGGML_BLAS_VENDOR=OpenBLAS"
           fi
           python -m pip install --upgrade pip
           python -m pip install uv
@@ -128,7 +130,7 @@ jobs:
         if: runner.os == 'Windows'
         env:
           RUST_LOG: trace
-          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON"
+          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
         run: |
           vcpkg install openblas
           python -m pip install --upgrade pip
