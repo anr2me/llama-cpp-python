@@ -56,7 +56,7 @@ jobs:
         env:
           # disable repair
           CIBW_REPAIR_WHEEL_COMMAND: ""
-          CIBW_ENVIRONMENT: CMAKE_ARGS="$CMAKE_ARGS" #"-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
+          CIBW_ENVIRONMENT: CMAKE_ARGS="${{ env.CMAKE_ARGS }}" #"-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
           CIBW_BEFORE_ALL_LINUX: "yum install -y openblas-devel"
         with:
           package-dir: .
