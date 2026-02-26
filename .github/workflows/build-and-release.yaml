@@ -44,7 +44,7 @@ jobs:
         if: runner.os == 'Windows'
         env:
           #RUST_LOG: trace
-          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
+          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
         run: |
           echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
           vcpkg install openblas
@@ -137,7 +137,7 @@ jobs:
         if: runner.os == 'Windows'
         env:
           #RUST_LOG: trace
-          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
+          CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
         run: |
           echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
           vcpkg install openblas
