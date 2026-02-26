@@ -33,6 +33,9 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y libopenblas-dev
             CMAKE_ARGS="$CMAKE_ARGS -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
+          else
+            brew install openblas
+            CMAKE_ARGS="$CMAKE_ARGS -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS -DCMAKE_PREFIX_PATH=/opt/homebrew/opt/openblas"
           fi
           echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
           python -m pip install --upgrade pip
@@ -59,7 +62,9 @@ jobs:
           # disable repair
           CIBW_REPAIR_WHEEL_COMMAND: ""
           CIBW_ENVIRONMENT: CMAKE_ARGS="${{ env.CMAKE_ARGS }}" #"-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
-          CIBW_BEFORE_ALL_LINUX: "yum install -y openblas-devel"
+          #CIBW_BEFORE_ALL_LINUX: "yum install -y openblas-devel"
+          #CIBW_BEFORE_ALL_MACOS: "brew install openblas"
+          #CIBW_BEFORE_ALL_WINDOWS: "vcpkg install openblas"
         with:
           package-dir: .
           output-dir: wheelhouse
@@ -89,6 +94,9 @@ jobs:
           CIBW_REPAIR_WHEEL_COMMAND: ""
           CIBW_ARCHS: "aarch64"
           CIBW_ENVIRONMENT: CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DCMAKE_CROSSCOMPILING=ON -DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF"
+          CIBW_ENVIRONMENT_LINUX: CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DCMAKE_CROSSCOMPILING=ON -DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
+          CIBW_ENVIRONMENT_WINDOWS: CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DCMAKE_CROSSCOMPILING=ON -DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+          CIBW_ENVIRONMENT_MACOS: CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DCMAKE_CROSSCOMPILING=ON -DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS -DCMAKE_PREFIX_PATH=/opt/homebrew/opt/openblas"
           CIBW_BEFORE_ALL_LINUX: "yum install -y openblas-devel"
           CIBW_BEFORE_ALL_MACOS: "brew install openblas"
           CIBW_BEFORE_ALL_WINDOWS: "vcpkg install openblas"
@@ -125,6 +133,9 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y libopenblas-dev
             CMAKE_ARGS="$CMAKE_ARGS -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
+          else
+            brew install openblas
+            CMAKE_ARGS="$CMAKE_ARGS -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS -DCMAKE_PREFIX_PATH=/opt/homebrew/opt/openblas"
           fi
           echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
           python -m pip install --upgrade pip
