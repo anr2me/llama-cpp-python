@@ -50,7 +50,7 @@ jobs:
           #RUST_LOG: trace
           CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
         run: |
-          echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
+          (echo CMAKE_ARGS=%CMAKE_ARGS%)>>%GITHUB_ENV%
           vcpkg install openblas pkgconf
           python -m pip install --upgrade pip
           python -m pip install uv
@@ -121,7 +121,7 @@ jobs:
           #RUST_LOG: trace
           CMAKE_ARGS: "-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
         run: |
-          echo "CMAKE_ARGS=$CMAKE_ARGS" >> $GITHUB_ENV
+          (echo CMAKE_ARGS=%CMAKE_ARGS%)>>%GITHUB_ENV%
           vcpkg install openblas pkgconf
           python -m pip install --upgrade pip
           python -m pip install uv
