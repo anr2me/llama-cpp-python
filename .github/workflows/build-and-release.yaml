@@ -60,10 +60,12 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v3.3.1
         env:
+          CIBW_SKIP: "*musllinux*"
+          #CIBW_BUILD: "cp39-* cp310-* cp311-* cp312-* cp313-* cp314-*"
           # disable repair
           CIBW_REPAIR_WHEEL_COMMAND: ""
-          CIBW_ENVIRONMENT: CMAKE_ARGS="${{ env.CMAKE_ARGS }}" #"-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
-          CIBW_BEFORE_BUILD: "rm -rf build/ llama_cpp/lib/*.so"
+          CIBW_ENVIRONMENT: CMAKE_ARGS="${{ env.CMAKE_ARGS }}" #-DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF
+          CIBW_BEFORE_BUILD_LINUX: "rm -rf build/ llama_cpp/lib/*.so"
           #CIBW_BEFORE_ALL_MACOS: "brew install openblas"
           #CIBW_BEFORE_ALL_WINDOWS: "vcpkg install openblas pkgconf"
           CIBW_BEFORE_ALL_LINUX: >-
@@ -77,44 +79,7 @@ jobs:
         with:
           name: wheels-${{ matrix.os }}
           path: ./wheelhouse/*.whl
-
-  build_wheels_arm64:
-    name: Build arm64 wheels
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: "recursive"
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: linux/arm64
-
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v3.3.1
-        env:
-          CIBW_SKIP: "*musllinux* pp*"
-          CIBW_REPAIR_WHEEL_COMMAND: ""
-          CIBW_ARCHS: "aarch64"
-          CIBW_ENVIRONMENT: CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DCMAKE_CROSSCOMPILING=ON -DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF"
-          CIBW_ENVIRONMENT_LINUX: CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DCMAKE_CROSSCOMPILING=ON -DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS"
-          CIBW_ENVIRONMENT_WINDOWS: CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DCMAKE_CROSSCOMPILING=ON -DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
-          CIBW_ENVIRONMENT_MACOS: CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DCMAKE_CROSSCOMPILING=ON -DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_ACCELERATE=ON"
-          #CIBW_ENVIRONMENT_MACOS: CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DCMAKE_CROSSCOMPILING=ON -DGGML_NATIVE=OFF -DLLAMA_NATIVE=OFF -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS -DGGML_OPENMP=OFF -DCMAKE_PREFIX_PATH=/opt/homebrew/opt/openblas"
-          #CIBW_BEFORE_ALL_MACOS: "brew install openblas"
-          CIBW_BEFORE_ALL_LINUX: "yum install -y openblas-devel"
-          CIBW_BEFORE_ALL_WINDOWS: "vcpkg install openblas pkgconf"
-          CIBW_BUILD: "cp39-* cp310-* cp311-* cp312-* cp313-* cp314-*"
-        with:
-          output-dir: wheelhouse
-
-      - name: Upload wheels as artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: wheels_arm64
-          path: ./wheelhouse/*.whl
-
+  
   build_sdist:
     name: Build source distribution
     runs-on: ubuntu-latest
